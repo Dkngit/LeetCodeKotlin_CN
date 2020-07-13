@@ -34,44 +34,21 @@ public class Solution6 {
         char[] chars1 = haystack.toCharArray();
         char[] chars2 = needle.toCharArray();
 
-//        int j = 0;
-
-        List<Integer> checks = new LinkedList<>();
-
-        for (int i = 0; i < chars1.length; i++) {
+        for (int i = 0; i <= (chars1.length-chars2.length); i++) {
             if (chars1[i] == chars2[0]) {
-                checks.add(i);
-            }
-
-            for (int j = 0; j < checks.size(); j++) {
-                Integer check = checks.get(j);
-                if (check != i && chars1[i] != chars2[i-check]){
-                    checks.remove(j);
-                    j--;
-                }else
-                if (i-check >= chars2.length-1) {
-                    return check;
+                boolean b = true;
+                for (int j = 1; j < chars2.length; j++) {
+                    if (chars1[i+j] != chars2[j]) {
+                        b = false;
+                        break;
+                    }
+                }
+                if (b) {
+                    return i;
                 }
             }
-
-
-//            if (chars1[i] == chars2[j]) {
-//                j++;
-//            } else if (j > 0) {
-//                if (chars1[i] == chars2[0]) {
-//                    j = 1;
-//                } else {
-//                    j = 0;
-//                }
-//            }
-//
-//            if(j == chars2.length) {
-//                return i-j+1;
-//            }
-
         }
 
-        //todo
         return -1;
     }
 
