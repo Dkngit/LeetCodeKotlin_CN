@@ -1,6 +1,7 @@
 package myString;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -33,26 +34,27 @@ public class SolutionGenerateParenthesis2 {
     }
 
     public List<String> generateParenthesis(int n) {
-        List<String> ans = new ArrayList<String>();
-        backtrack(ans, new StringBuilder(), 0, 0, n);
-        return ans;
+        return leaf(n);
     }
 
-    public void backtrack(List<String> ans, StringBuilder cur, int open, int close, int max) {
-        if (cur.length() == max * 2) {
-            ans.add(cur.toString());
-            return;
+    public List<String> leaf(int n) {
+        if (n == 0) {
+            return new ArrayList<>(Collections.singleton(""));
         }
-        if (open < max) {
-            cur.append('(');
-            backtrack(ans, cur, open + 1, close, max);
-            cur.deleteCharAt(cur.length() - 1);
+        if (n == 1) {
+            return new ArrayList<>(Collections.singleton("()"));
         }
-        if (close < open) {
-            cur.append(')');
-            backtrack(ans, cur, open, close + 1, max);
-            cur.deleteCharAt(cur.length() - 1);
+        List<String> list = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            List<String> listA = leaf(i);
+            for (String left : listA) {
+                List<String> listB = leaf(n -1 - i);
+                for (String right : listB) {
+                    list.add("("+left+")" + right);
+                }
+            }
         }
-    }
 
+        return list;
+    }
 }

@@ -1,7 +1,6 @@
 package myString;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -10,7 +9,7 @@ import java.util.List;
  *
  * @since 2022/9/30 14:29
  */
-public class SolutionGenerateParenthesisLevel2 {
+public class SolutionGenerateParenthesisOther {
 
     /*
      * 示例 1：
@@ -26,7 +25,7 @@ public class SolutionGenerateParenthesisLevel2 {
      *
      * */
     public static void main(String[] args) {
-        SolutionGenerateParenthesisLevel2 solution = new SolutionGenerateParenthesisLevel2();
+        SolutionGenerateParenthesisOther solution = new SolutionGenerateParenthesisOther();
         List<String> list = solution.generateParenthesis(3);
         for (String s : list) {
             System.out.println(s);
@@ -34,27 +33,26 @@ public class SolutionGenerateParenthesisLevel2 {
     }
 
     public List<String> generateParenthesis(int n) {
-        return leaf(n);
+        List<String> ans = new ArrayList<String>();
+        backtrack(ans, new StringBuilder(), 0, 0, n);
+        return ans;
     }
 
-    public List<String> leaf(int n) {
-        if (n == 0) {
-            return new ArrayList<>(Collections.singleton(""));
+    public void backtrack(List<String> ans, StringBuilder cur, int open, int close, int max) {
+        if (cur.length() == max * 2) {
+            ans.add(cur.toString());
+            return;
         }
-        if (n == 1) {
-            return new ArrayList<>(Collections.singleton("()"));
+        if (open < max) {
+            cur.append('(');
+            backtrack(ans, cur, open + 1, close, max);
+            cur.deleteCharAt(cur.length() - 1);
         }
-        List<String> list = new ArrayList<>();
-        for (int i = 0; i < n; i++) {
-            List<String> listA = leaf(i);
-            for (String left : listA) {
-                List<String> listB = leaf(n -1 - i);
-                for (String right : listB) {
-                    list.add("("+left+")" + right);
-                }
-            }
+        if (close < open) {
+            cur.append(')');
+            backtrack(ans, cur, open, close + 1, max);
+            cur.deleteCharAt(cur.length() - 1);
         }
-
-        return list;
     }
+
 }
