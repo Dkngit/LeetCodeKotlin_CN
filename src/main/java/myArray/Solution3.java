@@ -1,11 +1,7 @@
 package myArray;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.util.StopWatch;
-
-import java.util.*;
-import java.util.concurrent.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 存在重复元素
@@ -60,8 +56,6 @@ public class Solution3 {
 //    }
 
     public static void main(String[] args) throws InterruptedException {
-
-        Logger logger = LoggerFactory.getLogger(Solution3.class);
 
         int[] a = {1, 2, 3, 1};
         int[] b = {1, 2, 3, 4};
